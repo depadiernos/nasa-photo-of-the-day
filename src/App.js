@@ -1,13 +1,23 @@
-import React from "react";
-import "./App.css";
+import React, { useState, createContext } from "react";
+import Header from "./Components/Header"
+import SidebarList from "./Components/SidebarList"
+import MainImageContainer from "./Components/MainImageContainer"
+import API from "./Utils/getNasaPics"
+
+const Context = createContext()
 
 function App() {
+  const [pictureList, setPictureList] = useState([])
+
+
+
   return (
     <div className="App">
-      <p>
-        Read through the instructions in the README.md file to build your NASA
-        app! Have fun 🚀!
-      </p>
+      <Context.Provider value={{pictureList, setPictureList}}>
+      <Header />
+      <SidebarList/>
+      <MainImageContainer />
+      </Context.Provider>
     </div>
   );
 }
