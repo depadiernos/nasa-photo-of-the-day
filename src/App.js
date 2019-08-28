@@ -1,6 +1,5 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import Header from "./Components/Header"
-import SidebarList from "./Components/SidebarList"
 import MainImageContainer from "./Components/MainImageContainer"
 import dayjs from 'dayjs'
 import API from "./Utils/getNasaPics"
@@ -8,31 +7,31 @@ import API from "./Utils/getNasaPics"
 const Context = createContext()
 
 function App() {
-  const [pictureList, setPictureList] = useState()
+  const [picture, setPicture] = useState()
   const [date] = useState(dayjs())
 
-  useEffect(()=>{
-    let isCurrent=true
-    API.get(`neo/rest/v1/feed/?api_key=DEMO_KEY&end_date=${date.format('YYYY-MM-DD')}&start_date=${date.subtract(7, 'day').format('YYYY-MM-DD')}`)
-    .then((res) => {
-      setPictureList(res.data.near_earth_objects)
-    })
-    .catch((err)=> console.log(err))
-
-    return ()=> {isCurrent=false}
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-vars
+    let isCurrent = true
+    API.get(`planetary/apod?api_key=DEMO_KEY&date=${date.format('YYYY-MM-DD')}`)
+      .then((res) => {
+        setPicture(res.data)
+      })
+      .catch((err) => console.log(err))
+    return () => { isCurrent = false }
   }, [date])
-
-  console.log(pictureList)
 
   return (
     <div className="App">
-      <Context.Provider value={{pictureList, setPictureList}}>
-      {/* <Header />
-      <SidebarList/>
-      <MainImageContainer /> */}
+      <Context.Provider value={{ picture, setPicture }}>
+        <Header />
+        <MainImageContainer />
       </Context.Provider>
     </div>
   );
 }
 
+export function useAppContext(){
+  return useContext(Context)
+}
 export default App;
