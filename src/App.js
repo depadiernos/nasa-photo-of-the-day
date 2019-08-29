@@ -13,26 +13,32 @@ function App() {
 
   useEffect(() => {
     let exists = false
-    pictureList.map((picture) => {
-      if (picture.date === date) { exists = true }
+    pictureList.forEach((picture) => {
+      (picture.date === date) && (exists = true)
     })
     console.log(exists)
     if (!exists) {
       API.get(`/planetary/apod?api_key=EkatzOmEYV1OwStfQKkZaRnQVdmCvnBd4TvMLHwr&date=${date}`)
-      .then((res) => {
-        setPictureList(list => [...list, res.data])
-      })
-      .catch((err) => console.log(err))
+        .then((res) => {
+          setPictureList(list => [...list, res.data])
+        })
+        .catch((err) => console.log(err))
     }
   }, [date])
+
+  const handleClick = (days) => {
+    setDate(dayjs(date).add(`${days}`, 'days').format('YYYY-MM-DD'))
+  }
+
+  const isDisabled = date === dayjs().format('YYYY-MM-DD')
 
   return (
     <div className="App">
       <Context.Provider value={{ pictureList, setPictureList, date, setDate }}>
         <Header />
-        <PrevNextButton nav='prev' onClick={() => { setDate(dayjs(date).add(`-1`, 'days').format('YYYY-MM-DD')) }} />
+        <PrevNextButton nav='prev' onClick={() => { handleClick(-1) }} />
         <MainImageContainer />
-        <PrevNextButton nav='next' onClick={() => { setDate(dayjs(date).add(`1`, 'days').format('YYYY-MM-DD')) }} />
+        <PrevNextButton nav='next' onClick={() => { handleClick(1) }} disabled={isDisabled} />
       </Context.Provider>
     </div>
   );
