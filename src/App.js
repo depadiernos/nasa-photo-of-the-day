@@ -9,24 +9,30 @@ const Context = createContext()
 
 function App() {
   const [pictureList, setPictureList] = useState([])
-  const [date, setDate] = useState(dayjs())
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'))
 
   useEffect(() => {
-    const formattedDate = date.format('YYYY-MM-DD')
-    API.get(`/planetary/apod?api_key=EkatzOmEYV1OwStfQKkZaRnQVdmCvnBd4TvMLHwr&date=${formattedDate}`)
+    let exists = false
+    pictureList.map((picture) => {
+      if (picture.date === date) { exists = true }
+    })
+    console.log(exists)
+    if (!exists) {
+      API.get(`/planetary/apod?api_key=EkatzOmEYV1OwStfQKkZaRnQVdmCvnBd4TvMLHwr&date=${date}`)
       .then((res) => {
         setPictureList(list => [...list, res.data])
       })
       .catch((err) => console.log(err))
+    }
   }, [date])
 
   return (
     <div className="App">
       <Context.Provider value={{ pictureList, setPictureList, date, setDate }}>
         <Header />
-        <PrevNextButton nav='prev' onClick={()=>{setDate(date.add(`-1`, 'days'))}}/>
+        <PrevNextButton nav='prev' onClick={() => { setDate(dayjs(date).add(`-1`, 'days').format('YYYY-MM-DD')) }} />
         <MainImageContainer />
-        <PrevNextButton nav='next' onClick={()=>{setDate(date.add(`1`, 'days'))}}/>
+        <PrevNextButton nav='next' onClick={() => { setDate(dayjs(date).add(`1`, 'days').format('YYYY-MM-DD')) }} />
       </Context.Provider>
     </div>
   );
