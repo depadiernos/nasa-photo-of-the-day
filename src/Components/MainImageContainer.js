@@ -2,12 +2,18 @@ import React from 'react'
 import { useAppContext } from '../App'
 
 export default function MainImageContainer() {
-  const { picture } = useAppContext()
+  const { pictureList } = useAppContext()
+console.log(pictureList)
   return (
     <div>
-      {
-    (picture)&&(<img src={`${picture.url}`} alt={`${picture.title}`}/>)
-    }
+      {(pictureList) && pictureList.map((picture, index) => {
+        return (
+          <div key={index}>
+            <h1>{picture.title}</h1>
+            <img src={picture.hdurl} alt={`${picture.title}`} />
+          </div>
+        )
+      })}
     </div>
   )
 }

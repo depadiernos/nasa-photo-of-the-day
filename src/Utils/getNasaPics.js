@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: "https://api.nasa.gov/",
+  baseURL: "https://api.nasa.gov",
   responseType: "json"
 })
