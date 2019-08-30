@@ -29,7 +29,7 @@ export default function () {
       {(pictureList) && pictureList.map((picture, index) => {
         return (picture.date === date) && (
           <div key={index}>
-            <h1>{picture.title}</h1>
+            <h1>{`${picture.title} - ${picture.date}`}</h1>
             {(picture.media_type === 'image') && <Image src={picture.hdurl} alt={`${picture.title}`} />}
             {(picture.media_type === 'video') && <Iframe src={picture.url} title={`${picture.title}`} />}
           </div>
