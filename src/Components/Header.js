@@ -1,5 +1,12 @@
 import React from 'react'
+import styled from '@emotion/styled'
 
-export default function Header() {
-  return <div></div>
+const Header = styled.div`
+  width: 100%;
+  background-color: dodgerblue;
+  padding: 1rem;
+`
+
+export default function(props) {
+  return <Header>{props.children}</Header>
 }

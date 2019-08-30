@@ -1,8 +1,9 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
-import Header from "./Components/Header"
-import MainImageContainer from "./Components/MainImageContainer"
-import PrevNextButton from './Components/PrevNextButton'
 import dayjs from 'dayjs'
+import DatePicker from 'react-datepicker'
+import Header from "./Components/Header"
+import ImageContainer from "./Components/ImageContainer"
+import PrevNextButton from './Components/PrevNextButton'
 import API from "./Utils/getNasaPics"
 
 const Context = createContext()
@@ -24,6 +25,7 @@ function App() {
         })
         .catch((err) => console.log(err))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date])
 
   const handleClick = (days) => {
@@ -35,10 +37,13 @@ function App() {
   return (
     <div className="App">
       <Context.Provider value={{ pictureList, setPictureList, date, setDate }}>
-        <Header />
+        <Header>
         <PrevNextButton nav='prev' onClick={() => { handleClick(-1) }} />
-        <MainImageContainer />
         <PrevNextButton nav='next' onClick={() => { handleClick(1) }} disabled={isDisabled} />
+        Astronomy Picture of the Day
+        <DatePicker ></DatePicker>
+        </Header>
+        <ImageContainer />
       </Context.Provider>
     </div>
   );
