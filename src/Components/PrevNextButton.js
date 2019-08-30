@@ -1,5 +1,11 @@
 import React from 'react'
+import styled from '@emotion/styled'
 
-export default function PrevNextButton(props) {
-  return <button onClick={props.onClick} disabled={props.disabled}>{props.nav}</button>
+const PrevNextButton = styled.button`
+  margin: 1rem;
+  padding: 0.2rem;
+`
+
+export default function(props) {
+  return <PrevNextButton onClick={props.onClick} disabled={props.disabled}>{props.nav}</PrevNextButton>
 }

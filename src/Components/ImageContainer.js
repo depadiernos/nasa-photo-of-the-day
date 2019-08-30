@@ -16,6 +16,10 @@ const Iframe = styled.iframe`
 const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
+  h1{
+    text-align: center;
+    font-family: sans-serif;
+  }
 `
 
 export default function () {
