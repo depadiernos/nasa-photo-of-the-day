@@ -40,10 +40,10 @@ function App() {
     <div className="App">
       <Context.Provider value={{ pictureList, setPictureList, date, setDate }}>
         <Header>
+        <h1>Astronomy Picture of the Day</h1>
         <PrevNextButton nav='prev' onClick={() => { handleClick(-1) }} />
-        <PrevNextButton nav='next' onClick={() => { handleClick(1) }} disabled={isDisabled} />
-        Astronomy Picture of the Day
         <DatePicker dateFormat='yyyy-MM-dd' selected={selectedDate} onChange={newDate => setDate(dayjs(newDate).format('YYYY-MM-DD'))}></DatePicker>
+        <PrevNextButton nav='next' onClick={() => { handleClick(1) }} disabled={isDisabled} />
         {console.log(date)}
         </Header>
         <ImageContainer />
