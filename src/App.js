@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import dayjs from 'dayjs'
 import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 import Header from "./Components/Header"
 import ImageContainer from "./Components/ImageContainer"
 import PrevNextButton from './Components/PrevNextButton'
@@ -11,6 +12,7 @@ const Context = createContext()
 function App() {
   const [pictureList, setPictureList] = useState([])
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'))
+  const [selectedDate] = useState(new Date())
 
   useEffect(() => {
     let exists = false
@@ -41,7 +43,8 @@ function App() {
         <PrevNextButton nav='prev' onClick={() => { handleClick(-1) }} />
         <PrevNextButton nav='next' onClick={() => { handleClick(1) }} disabled={isDisabled} />
         Astronomy Picture of the Day
-        <DatePicker ></DatePicker>
+        <DatePicker dateFormat='yyyy-MM-dd' selected={selectedDate} onChange={newDate => setDate(dayjs(newDate).format('YYYY-MM-DD'))}></DatePicker>
+        {console.log(date)}
         </Header>
         <ImageContainer />
       </Context.Provider>
